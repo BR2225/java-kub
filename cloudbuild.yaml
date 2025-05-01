@@ -23,10 +23,17 @@ steps:
       "-c",
       "gcloud deploy apply --file Deployment/pipeline.yaml --region=us-central1 && \
        gcloud deploy apply --file Deployment/production.yaml --region=us-central1 && \
-       gcloud deploy releases create app-release-${SHORT_SHA} \
-         --delivery-pipeline=gke-cicd-pipeline \
-         --region=us-central1 \
-         --skaffold-file=skaffold.yaml"
+        gcloud deploy releases create app-release-$(date +%Y%m%d%H%M%S) \
+       --delivery-pipeline=gke-cicd-pipeline \
+       --region=us-central1 \
+       --skaffold-file=skaffold.yaml"
+ 
+      # gcloud deploy releases create app-release-${SHORT_SHA} \### here ${SHORT_SHA} is a bad practice , as Cloud Deploy release names must be globally unique within a delivery pipeline
+                                                                  #  If ${SHORT_SHA} didn’t change
+       #  --delivery-pipeline=gke-cicd-pipeline \
+        # --region=us-central1 \
+         #--skaffold-file=skaffold.yaml"
+      
     ]
 
 images:
