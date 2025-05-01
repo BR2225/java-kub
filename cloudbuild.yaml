@@ -1,0 +1,26 @@
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    id: Build
+    args: ['build', '-t', 'us-central1-docker.pkg.dev/inductive-gift-456306-h4/java-kub/java-kub:latest', '.']
+
+  - name: 'gcr.io/cloud-builders/docker'
+    id: Push
+    args: ['push', 'us-central1-docker.pkg.dev/inductive-gift-456306-h4/java-kub/java-kub:latest']
+
+images:
+  - 'us-central1-docker.pkg.dev/inductive-gift-456306-h4/java-kub/java-kub:latest'
+
+  - name: 'google/cloud-sdk:latest'
+    entrypoint: 'sh'
+    args:
+      - -xe
+      - -c
+      - |
+        gcloud deploy apply --file deploy/pipeline.yaml --region=us-central1
+        gcloud deploy apply --file deploy/production.yaml --region=us-central1
+        gcloud deploy releases create 'app-release-${SHORT_SHA}' --delivery-pipeline=gke-cicd-pipeline --region=us-central1 --skaffold-file=skaffold.yaml
+
+logsBucket: 'gs://build-logs-watchful-1'
+
+options:
+  logging: GCS_ONLY

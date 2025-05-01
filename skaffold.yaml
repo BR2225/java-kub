@@ -1,0 +1,11 @@
+apiVersion: skaffold/v2beta29
+kind: Config
+metadata:
+  name: java-kub-app
+build:
+  artifacts:
+    - image: us-central1-docker.pkg.dev/inductive-gift-456306-h4/java-kub/java-kub
+deploy:
+  kubectl:
+    manifests:
+      - k8s/deploy.yaml

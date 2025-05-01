@@ -1,0 +1,19 @@
+apiVersion: deploy.cloud.google.com/v1
+kind: DeliveryPipeline
+metadata:
+  name: gke-cicd-pipeline
+  labels:
+    app: cicd
+description: Deploy Java App to GKE
+serialPipeline:
+  stages:
+    - targetId: production
+      # profiles:
+      # - dev
+    # - targetId: staging
+    #   profiles:
+    #   - staging
+  #- targetId: prod
+  #   profiles:
+  #   - prod
+
