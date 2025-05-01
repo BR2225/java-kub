@@ -21,8 +21,8 @@ steps:
     args: [
       "-xe",
       "-c",
-      "gcloud deploy apply --file deploy/pipeline.yaml --region=us-central1 && \
-       gcloud deploy apply --file deploy/production.yaml --region=us-central1 && \
+      "gcloud deploy apply --file Deployment/pipeline.yaml --region=us-central1 && \
+       gcloud deploy apply --file Deployment/production.yaml --region=us-central1 && \
        gcloud deploy releases create app-release-${SHORT_SHA} \
          --delivery-pipeline=gke-cicd-pipeline \
          --region=us-central1 \
